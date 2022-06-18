@@ -965,6 +965,14 @@ public class GLTFUnarchiver {
         material.setValue(Float(1.0), forKey: "baseColorFactorA")
         material.setValue(Float(1.0), forKey: "metallicFactor")
         material.setValue(Float(1.0), forKey: "roughnessFactor")
+        if !glMaterial.emissiveFactor.isEmpty {
+            material.emission.contents = UIColor(
+                red: CGFloat(glMaterial.emissiveFactor[0]),
+                green: CGFloat(glMaterial.emissiveFactor[1]),
+                blue: CGFloat(glMaterial.emissiveFactor[2]),
+                alpha: 1.0
+            )
+        }
         material.setValue(glMaterial.emissiveFactor[0], forKey: "emissiveFactorR")
         material.setValue(glMaterial.emissiveFactor[1], forKey: "emissiveFactorG")
         material.setValue(glMaterial.emissiveFactor[2], forKey: "emissiveFactorB")
@@ -1056,7 +1064,8 @@ public class GLTFUnarchiver {
         case "BLEND":
             material.blendMode = .alpha
             material.writesToDepthBuffer = false
-            material.shaderModifiers![.surface] = try! String(contentsOf: URL(fileURLWithPath: bundle.path(forResource: "GLTFShaderModifierSurface_alphaModeBlend", ofType: "shader")!), encoding: String.Encoding.utf8)
+            material.isDoubleSided = false
+//            material.shaderModifiers![.surface] = try! String(contentsOf: URL(fileURLWithPath: bundle.path(forResource: "GLTFShaderModifierSurface_alphaModeBlend", ofType: "shader")!), encoding: String.Encoding.utf8)
         case "MASK":
             material.shaderModifiers![.fragment] = try! String(contentsOf: URL(fileURLWithPath: bundle.path(forResource: "GLTFShaderModifierFragment_alphaCutoff", ofType: "shader")!), encoding: String.Encoding.utf8)
         default:

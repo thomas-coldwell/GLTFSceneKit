@@ -31,6 +31,14 @@ class GameViewController: UIViewController {
         }
         
         self.setScene(scene)
+      
+        let lightNode = SCNNode()
+        let light = SCNLight()
+        light.type = .omni
+        light.intensity = 0.3
+        lightNode.light = light
+        lightNode.position = SCNVector3(0.3, 0.3, -0.3)
+        scene.rootNode.addChildNode(lightNode)
         
         self.gameView!.autoenablesDefaultLighting = true
         
@@ -41,7 +49,7 @@ class GameViewController: UIViewController {
         self.gameView!.showsStatistics = true
         
         // configure the view
-        self.gameView!.backgroundColor = UIColor.gray
+        self.gameView!.backgroundColor = UIColor.lightGray
 
         self.gameView!.delegate = self
     }
@@ -51,9 +59,9 @@ class GameViewController: UIViewController {
         self.gameView!.scene = scene
         self.scene = scene
 
-        //to give nice reflections :)
-        scene.lightingEnvironment.contents = "art.scnassets/shinyRoom.jpg"
-        scene.lightingEnvironment.intensity = 2;
+//        //to give nice reflections :)
+//        scene.lightingEnvironment.contents = "art.scnassets/shinyRoom.jpg"
+//        scene.lightingEnvironment.intensity = 1;
     }
     
     override var shouldAutorotate: Bool {
