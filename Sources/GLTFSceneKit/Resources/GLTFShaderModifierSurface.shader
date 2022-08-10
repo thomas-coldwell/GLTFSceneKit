@@ -3,7 +3,6 @@
 //  GLTFSceneKit
 //
 //  Created by magicien on 2017/08/29.
-//  Copyright © 2017 DarkHorse. All rights reserved.
 //
 
 #pragma arguments
@@ -23,4 +22,4 @@ float emissiveFactorB;
 _surface.diffuse *= float4(baseColorFactorR, baseColorFactorG, baseColorFactorB, baseColorFactorA);
 _surface.metalness *= metallicFactor;
 _surface.roughness *= roughnessFactor;
-_surface.emission.rgb *= float3(emissiveFactorR, emissiveFactorG, emissiveFactorB);
+_surface.emission *= float4(emissiveFactorR, emissiveFactorG, emissiveFactorB, 1.0);

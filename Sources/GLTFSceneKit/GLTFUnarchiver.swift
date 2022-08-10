@@ -3,7 +3,6 @@
 //  GLTFSceneKit
 //
 //  Created by magicien on 2017/08/17.
-//  Copyright © 2017 DarkHorse. All rights reserved.
 //
 
 import SceneKit
@@ -965,16 +964,28 @@ public class GLTFUnarchiver {
         material.setValue(Float(1.0), forKey: "baseColorFactorA")
         material.setValue(Float(1.0), forKey: "metallicFactor")
         material.setValue(Float(1.0), forKey: "roughnessFactor")
-        material.setValue(glMaterial.emissiveFactor[0], forKey: "emissiveFactorR")
-        material.setValue(glMaterial.emissiveFactor[1], forKey: "emissiveFactorG")
-        material.setValue(glMaterial.emissiveFactor[2], forKey: "emissiveFactorB")
+        let emissiveFactor = glMaterial.emissiveFactor ?? [0.0, 0.0, 0.0]
+        material.emission.contents = UIColor(
+          red: CGFloat(emissiveFactor[0]),
+          green: CGFloat(emissiveFactor[1]),
+          blue: CGFloat(emissiveFactor[2]),
+          alpha: 1.0
+        )
+        material.setValue(emissiveFactor[0], forKey: "emissiveFactorR")
+        material.setValue(emissiveFactor[1], forKey: "emissiveFactorG")
+        material.setValue(emissiveFactor[2], forKey: "emissiveFactorB")
         material.setValue(glMaterial.alphaCutoff, forKey: "alphaCutoff")
         
         if let pbr = glMaterial.pbrMetallicRoughness {
+
+            let metallicFactor = pbr.metallicFactor ?? 1.0
+            let roughnessFactor = pbr.roughnessFactor ?? 1.0
+
             material.lightingModel = .physicallyBased
             material.diffuse.contents = createColor(pbr.baseColorFactor)
-            material.metalness.contents = createGrayColor(white: pbr.metallicFactor)
-            material.roughness.contents = createGrayColor(white: pbr.roughnessFactor)
+
+            material.metalness.contents = createGrayColor(white: metallicFactor)
+            material.roughness.contents = createGrayColor(white: roughnessFactor)
             
             if let baseTexture = pbr.baseColorTexture {
                 try self.setTexture(index: baseTexture.index, to: material.diffuse)
@@ -1007,11 +1018,9 @@ public class GLTFUnarchiver {
                     }
                 }
                 
-                let metallicFactor = pbr.metallicFactor
                 material.setValue(metallicFactor, forKey: "metallicFactor")
-                
-                let roughnessFactor = pbr.roughnessFactor
                 material.setValue(roughnessFactor, forKey: "roughnessFactor")
+                
             }
             
         }

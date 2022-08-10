@@ -32,8 +32,8 @@ struct GLTFMaterial: GLTFPropertyProtocol {
 
   let _emissiveFactor: [Float]?
   /** The RGB components of the emissive color of the material. These values are linear. If an emissiveTexture is specified, this value is multiplied with the texel values. */
-  var emissiveFactor: [Float] {
-    get { return self._emissiveFactor ?? [0,0,0] }
+  var emissiveFactor: [Float]? {
+    get { return self._emissiveFactor }
   }
 
   let _alphaMode: String?

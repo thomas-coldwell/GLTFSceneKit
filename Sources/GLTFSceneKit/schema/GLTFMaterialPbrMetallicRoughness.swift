@@ -20,14 +20,14 @@ struct GLTFMaterialPbrMetallicRoughness: GLTFPropertyProtocol {
 
   let _metallicFactor: Float?
   /** The metalness of the material. A value of 1.0 means the material is a metal. A value of 0.0 means the material is a dielectric. Values in between are for blending between metals and dielectrics such as dirty metallic surfaces. This value is linear. If a metallicRoughnessTexture is specified, this value is multiplied with the metallic texel values. */
-  var metallicFactor: Float {
-    get { return self._metallicFactor ?? 1 }
+  var metallicFactor: Float? {
+    get { return self._metallicFactor }
   }
 
   let _roughnessFactor: Float?
   /** The roughness of the material. A value of 1.0 means the material is completely rough. A value of 0.0 means the material is completely smooth. This value is linear. If a metallicRoughnessTexture is specified, this value is multiplied with the roughness texel values. */
-  var roughnessFactor: Float {
-    get { return self._roughnessFactor ?? 1 }
+  var roughnessFactor: Float? {
+    get { return self._roughnessFactor }
   }
 
   /** The metallic-roughness texture. The metalness values are sampled from the B channel. The roughness values are sampled from the G channel. These values are linear. If other channels are present (R or A), they are ignored for metallic-roughness calculations. */
